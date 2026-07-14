@@ -27,12 +27,14 @@ function Home() {
   }
 
   return (
-    <div className="app-container">
-      <div style={{padding: '15px', paddingBottom: '0'}}>
-        <h2 style={{margin: '0 0 10px 0'}}>Unify Feed</h2>
-        <p style={{margin: '0 0 15px 0', color: 'var(--text-color)', opacity: 0.8}}>Hello, {currentUser?.display_name || currentUser?.username}!</p>
+    <>
+      <div className="app-container">
+        <div style={{padding: '15px', paddingBottom: '0'}}>
+          <h2 style={{margin: '0 0 10px 0'}}>Unify Feed</h2>
+          <p style={{margin: '0 0 15px 0', color: 'var(--text-color)', opacity: 0.8}}>Hello, {currentUser?.display_name || currentUser?.username}!</p>
+        </div>
+        <PostFeed key={feedKey} />
       </div>
-      <PostFeed key={feedKey} />
       
       <BottomNav onOpenCreateModal={() => setIsCreateModalOpen(true)} />
       <CreatePostModal 
@@ -40,7 +42,7 @@ function Home() {
         onClose={() => setIsCreateModalOpen(false)} 
         onPostCreated={handlePostCreated}
       />
-    </div>
+    </>
   );
 }
 
