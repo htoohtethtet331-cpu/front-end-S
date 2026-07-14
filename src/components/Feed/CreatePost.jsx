@@ -52,7 +52,7 @@ function CreatePost({ onPostCreated }) {
     };
 
     return (
-        <div className="create-post-container glass-panel" style={{marginBottom: '15px'}}>
+        <div className="create-post-container" style={{padding: '5px'}}>
             <form onSubmit={handleSubmit}>
                 <div className="fb-input-area" style={{alignItems: 'flex-start', padding: 0}}>
                     <div className="avatar" style={{width: '40px', height: '40px', borderRadius: '50%', background: '#ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '5px'}}>
