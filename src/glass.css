@@ -52,7 +52,6 @@ body.dark-mode::before {
 .bottom-nav-bar,
 .profile-header,
 .notification-item,
-.app-header,
 .comments-sheet {
     background: var(--glass-bg) !important;
     backdrop-filter: var(--glass-blur) !important;
@@ -93,10 +92,15 @@ body.dark-mode::before {
 
 /* App Header specific */
 .app-header {
-    border-radius: 0 0 20px 20px !important;
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-blur) !important;
+    -webkit-backdrop-filter: var(--glass-blur) !important;
+    border-radius: 0 !important;
     border-top: none !important;
     border-left: none !important;
     border-right: none !important;
+    border-bottom: 1px solid var(--glass-border) !important;
+    margin-bottom: 15px;
 }
 
 /* Inputs, Textareas */
