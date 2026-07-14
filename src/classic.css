@@ -1,0 +1,225 @@
+/* classic.css - Old Original UI (Classic) */
+
+:root {
+    --bg-color: #ffffff;
+    /* Restore original light bg */
+    --text-color: #000000;
+    --border-color: #e0e0e0;
+    --primary-color: #4a90e2;
+    --secondary-color: #888888;
+}
+
+body.dark-mode {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --border-color: #333333;
+    --secondary-color: #aaaaaa;
+}
+
+body {
+    background: var(--bg-color) !important;
+    color: var(--text-color) !important;
+}
+
+/* Remove Aurora background completely */
+fore {
+    height: 600px;
+    width: 600px;
+    display: none !important;
+}
+
+/* Revert Containers to flat */
+.post-item,
+.create-post-section,
+.app-header,
+.bottom-nav-bar,
+.comments-sheet,
+.profile-header,
+.settings-drawer {
+    background: var(--bg-color) !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: var(--text-color) !important;
+}
+
+/* Restore borders for old UI */
+.post-item {
+    border-bottom: 1px solid var(--border-color) !important;
+    margin-bottom: 0 !important;
+    padding: 1rem 0 !important;
+}
+
+.post-item:last-child {
+    border-bottom: none !important;
+}
+
+.app-header {
+    border-bottom: 1px solid var(--border-color) !important;
+    margin-bottom: 0 !important;
+}
+
+.bottom-nav-bar {
+    border-top: 1px solid var(--border-color) !important;
+    background: var(--bg-color) !important;
+}
+
+.comments-sheet {
+    border-radius: 16px 16px 0 0 !important;
+    /* Keep top rounded for sheet */
+    border-top: 1px solid var(--border-color) !important;
+}
+
+/* Restore original search bar */
+#search-bar-container {
+    background: var(--bg-color) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    margin-bottom: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+#search-bar-container .search-input-wrapper {
+    background: rgba(128, 128, 128, 0.1) !important;
+    border-radius: 8px !important;
+    border: none !important;
+}
+
+body.dark-mode #search-bar-container .search-input-wrapper {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+#search-input,
+.comment-input,
+#post-content,
+.profile-edit-input,
+input[type="text"],
+input[type="password"],
+textarea {
+    background: transparent !important;
+    /* The wrapper has background */
+    color: var(--text-color) !important;
+    border: none !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--secondary-color) !important;
+}
+
+/* Text and Colors */
+.post-author-name,
+.glass-title,
+.settings-info h4,
+.user-name,
+.user-display-name,
+.stat-value,
+.profile-bio {
+    color: var(--text-color) !important;
+}
+
+.post-timestamp,
+.comment-timestamp,
+.nav-btn,
+.stat-label,
+.settings-info p,
+.user-username {
+    color: var(--secondary-color) !important;
+}
+
+.nav-btn.active {
+    color: var(--primary-color) !important;
+}
+
+/* Secondary Button */
+.secondary-btn {
+    color: var(--secondary-color) !important;
+    background: transparent !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+/* Settings Card */
+.settings-card {
+    background: transparent !important;
+    border-radius: 0 !important;
+}
+
+.settings-row {
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+.settings-row:last-child {
+    border-bottom: none !important;
+}
+
+/* Search Suggestions */
+#search-suggestions {
+    background: var(--bg-color) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-color) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.suggestion-item {
+    color: var(--text-color) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+.suggestion-item:hover {
+    background: rgba(128, 128, 128, 0.1) !important;
+}
+
+/* Notifications */
+.notification-item {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    margin-bottom: 0 !important;
+    border-radius: 0 !important;
+}
+
+/* Modals */
+.modal-content,
+.dropdown-menu {
+    background: var(--bg-color) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+.dropdown-item {
+    color: var(--text-color) !important;
+}
+
+.dropdown-item:hover {
+    background: rgba(128, 128, 128, 0.1) !important;
+}
+
+/* Segmented Control / Toggle */
+.theme-segment {
+    background: transparent;
+    color: var(--secondary-color) !important;
+}
+
+.theme-segment.active {
+    background: var(--primary-color) !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+}
+
+/* Comment Item */
+.comment-item {
+    background: transparent !important;
+    border-radius: 0 !important;
+    padding: 10px 0 !important;
+    border: none !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    margin-bottom: 0 !important;
+}
+
+.comment-item:last-child {
+    border-bottom: none !important;
+}
+
+.comment-text {
+    color: var(--text-color) !important;
+}
