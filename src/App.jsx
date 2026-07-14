@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './context/AuthContext';
+import PostFeed from './components/Feed/PostFeed';
 import './style.css'; 
 import './glass.css'; 
 
@@ -15,9 +16,11 @@ function Home() {
 
   return (
     <div className="app-container">
-      <h2>Welcome to Unify</h2>
-      <p>Hello, {currentUser?.display_name || currentUser?.username}!</p>
-      <p>The React Post Feed migration is currently in progress...</p>
+      <div style={{padding: '15px', paddingBottom: '0'}}>
+        <h2 style={{margin: '0 0 10px 0'}}>Unify Feed</h2>
+        <p style={{margin: '0 0 15px 0', color: 'var(--text-color)', opacity: 0.8}}>Hello, {currentUser?.display_name || currentUser?.username}!</p>
+      </div>
+      <PostFeed />
     </div>
   );
 }
