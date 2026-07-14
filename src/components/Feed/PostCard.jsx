@@ -1,38 +1,58 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext, API_BASE_URL } from '../../context/AuthContext';
 import axios from 'axios';
+import CommentSheet from './CommentSheet';
 
 function PostCard({ post }) {
     const { currentUser } = useContext(AuthContext);
     const date = new Date(post.created_at).toLocaleString();
     const isActive = post.is_active;
+    const [showComments, setShowComments] = useState(false);
 
     const handleDelete = async () => {
         if (!window.confirm("Are you sure you want to delete this post?")) return;
         try {
             await axios.delete(`${API_BASE_URL}/posts/${post.id}`);
-            // Optimistic update should be handled by parent, but for now we'll just reload
             window.location.reload();
         } catch (error) {
             console.error("Error deleting post", error);
         }
     };
 
+    const [hasLiked, setHasLiked] = useState(post.has_liked);
+    const [likeCount, setLikeCount] = useState(post.like_count || 0);
+    const [hasFavorited, setHasFavorited] = useState(post.has_favorited);
+
     const toggleLike = async () => {
-        // Implement later
-        console.log("Toggle like for", post.id);
+        if (!currentUser) return;
+        const newHasLiked = !hasLiked;
+        setHasLiked(newHasLiked);
+        setLikeCount(prev => newHasLiked ? prev + 1 : Math.max(0, prev - 1));
+        try {
+            await axios.post(`${API_BASE_URL}/posts/${post.id}/like`, { user_id: currentUser.id });
+        } catch (error) {
+            console.error("Error toggling like", error);
+            setHasLiked(!newHasLiked);
+            setLikeCount(prev => !newHasLiked ? prev + 1 : Math.max(0, prev - 1));
+        }
     };
 
     const toggleFavorite = async () => {
-        // Implement later
-        console.log("Toggle favorite for", post.id);
+        if (!currentUser) return;
+        const newHasFavorited = !hasFavorited;
+        setHasFavorited(newHasFavorited);
+        try {
+            await axios.post(`${API_BASE_URL}/posts/${post.id}/favorite`, { user_id: currentUser.id });
+        } catch (error) {
+            console.error("Error toggling favorite", error);
+            setHasFavorited(!newHasFavorited);
+        }
     };
 
     return (
         <div className="post-item" id={`post-${post.id}`}>
             <div className="post-header">
                 <div className="avatar-wrapper">
-                    {/* Placeholder for renderAvatarWithStoryRing */}
                     <div className="avatar" style={{width: '40px', height: '40px', borderRadius: '50%', background: '#ccc', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                         {post.photo_url ? (
                             <img src={post.photo_url} alt="Avatar" style={{width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover'}} />
@@ -77,19 +97,21 @@ function PostCard({ post }) {
             ) : null}
             
             <div className="post-actions-fb" style={{paddingTop: '10px'}}>
-                <div role="button" className={`fb-interaction-btn heart-btn ${post.has_liked ? 'liked' : ''}`} onClick={toggleLike} style={{display: 'flex', gap: '5px', alignItems: 'center'}}>
+                <div role="button" className={`fb-interaction-btn heart-btn ${hasLiked ? 'liked' : ''}`} onClick={toggleLike} style={{display: 'flex', gap: '5px', alignItems: 'center'}}>
                     <svg viewBox="0 0 24 24" width="20" height="20" className="heart-icon"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                    <span>{post.like_count || 0}</span>
+                    <span>{likeCount}</span>
                 </div>
-                <div role="button" className="fb-interaction-btn comment-btn" style={{display: 'flex', gap: '5px', alignItems: 'center'}}>
+                <div role="button" className="fb-interaction-btn comment-btn" onClick={() => setShowComments(true)} style={{display: 'flex', gap: '5px', alignItems: 'center'}}>
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style={{pointerEvents: 'none'}}><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
                     <span>{post.comment_count || 0}</span>
                 </div>
-                <div role="button" className={`fb-interaction-btn fav-btn ${post.has_favorited ? 'favorited' : ''}`} onClick={toggleFavorite} style={{display: 'flex', gap: '5px', alignItems: 'center'}}>
+                <div role="button" className={`fb-interaction-btn fav-btn ${hasFavorited ? 'favorited' : ''}`} onClick={toggleFavorite} style={{display: 'flex', gap: '5px', alignItems: 'center'}}>
                     <svg viewBox="0 0 24 24" width="20" height="20" className="fav-icon"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
                     <span>Favorite</span>
                 </div>
             </div>
+            
+            {showComments && <CommentSheet post={post} onClose={() => setShowComments(false)} />}
         </div>
     );
 }

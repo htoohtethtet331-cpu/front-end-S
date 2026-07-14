@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext, API_BASE_URL } from '../../context/AuthContext';
-import PostCard from './PostCard'; // We will create this next
+import PostCard from './PostCard'; 
+import CreatePost from './CreatePost';
 
 function PostFeed() {
     const { currentUser } = useContext(AuthContext);
@@ -27,6 +28,10 @@ function PostFeed() {
         fetchPosts();
     }, [currentUser]);
 
+    const handleNewPost = (newPost) => {
+        setPosts(prev => [newPost, ...prev]);
+    };
+
     if (loading) {
         return (
             <div className="feed-container" style={{display: 'flex', justifyContent: 'center', padding: '20px'}}>
@@ -37,6 +42,7 @@ function PostFeed() {
 
     return (
         <div className="feed-container">
+            {currentUser && <CreatePost onPostCreated={handleNewPost} />}
             {posts.map(post => (
                 <PostCard key={post.id} post={post} />
             ))}
